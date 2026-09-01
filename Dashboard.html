@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Finance Division</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+if(localStorage.getItem("loggedIn")!=="true")
+{
+    window.location.href="login.html";
+}
+</script>
+</head>
+<body class="bg-white text-slate-800">
+    
+<style>
+@keyframes ticker {
+    from {
+        transform: translateX(60%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+.ticker {
+    display: inline-flex;
+    white-space: nowrap;
+    animation: ticker 25s linear infinite;
+}
+.ticker:hover {
+    animation-play-state: paused;
+}
+</style>
+
+<!--ticker-->
+<div class="fixed top-0 left-0 w-full bg-indigo-950 text-indigo-100 text-xs overflow-hidden py-1.5 z-50">
+    <div class="ticker">
+        <span class="mx-8">Pakistan's Fiscal Operations July–March 2023-24</span>
+        <span class="mx-8">Cash Management & Treasury Single Account Rules 2024</span>
+        <span class="mx-8">Appointment of Commissioner, Securities and Exchange...</span>
+        <span class="mx-8">Pakistan's Fiscal Operations July–March 2023-24</span>
+        <span class="mx-8">Cash Management & Treasury Single Account Rules 2024</span>
+        <span class="mx-8">Appointment of Commissioner, Securities and Exchange...</span>
+    </div>
+</div>
+<!--Header-->
+<header class="fixed top-6 left-0 w-full z-50">
+<div class="bg-black/35 backdrop-blur-md">
+<div class="max-w-7xl mx-auto px-4 lg:px-8 h-28 flex items-center justify-between">
+<div class="flex-shrink-0">
+<img src="images/logo.svg" alt="Finance Division" class="h-14 md:h-16 lg:h-20 w-auto">
+</div>
+<nav class="hidden xl:flex flex-1 justify-center">
+<ul class="flex items-center gap-5 2xl:gap-8 text-white font-semibold text-base 2xl:text-lg">
+<li><a href="#" class="hover:text-indigo-300 transition">HOME</a></li>
+<li><a href="#" class="hover:text-indigo-300 transition">BUDGET</a></li>
+<li><a href="#" class="hover:text-indigo-300 transition">REGULATIONS</a></li>
+<li><a href="#" class="hover:text-indigo-300 transition">PUBLICATIONS</a></li>
+<li><a href="#" class="hover:text-indigo-300 transition">TENDERS</a></li>
+<li><a href="#" class="hover:text-indigo-300 transition">TRAININGS</a></li>
+</ul>
+</nav>
+<div class="flex items-center gap-3">
+<button class="hidden lg:block bg-white text-[#000e25] text-sm font-semibold px-5 py-3 rounded-full whitespace-nowrap hover:bg-gray-100 transition">
+PUBLIC INFORMATION OFFICER
+</button>
+<button id="menuBtn" class="xl:hidden text-white">
+<svg xmlns="http://www.w3.org/2000/svg" class="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
+</div>
+</div>
+</div>
+</header>
+
+<div id="mobileMenu" class="fixed top-[96px] left-0 w-full bg-[#000e25]/95 backdrop-blur-lg text-white hidden z-40 xl:hidden">
+<ul class="flex flex-col text-center text-lg font-semibold">
+<li><a href="#" class="block py-4 hover:bg-white/10">HOME</a></li>
+<li><a href="#" class="block py-4 hover:bg-white/10">BUDGET</a></li>
+<li><a href="#" class="block py-4 hover:bg-white/10">REGULATIONS</a></li>
+<li><a href="#" class="block py-4 hover:bg-white/10">PUBLICATIONS</a></li>
+<li><a href="#" class="block py-4 hover:bg-white/10">TENDERS</a></li>
+<li><a href="#" class="block py-4 hover:bg-white/10">TRAININGS</a></li>
+<li class="py-5">
+<button class="bg-white text-[#000e25] px-6 py-3 rounded-full font-semibold">
+PUBLIC INFORMATION OFFICER
+</button>
+</li>
+</ul>
+</div>
+
+<!-- Hero section -->
+<section id="home" class="relative">
+    <div class="relative overflow-hidden">
+        <img id="carouselImg" src="images/img1.jpg" class="w-full h-[620px] object-cover">
+         <div class="absolute bottom-0 left-0 w-full z-20 leading-none">
+            <svg viewBox="0 0 1440 120" xmlns="http://www.w3.org/2000/svg" class="w-full h-20 md:h-28" preserveAspectRatio="none">
+                <path fill="#f8fafc" d="M0,64 C240,120 480,0 720,32 C960,64 1200,120 1440,64 L1440,120 L0,120 Z"></path>
+            </svg>
+        </div>
+        <button id="prevBtn" class="absolute left-5 top-[58%] -translate-y-1/2 w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-100 transition z-30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 18l-6-6 6-6"/>
+            </svg>
+        </button>
+        <button id="nextBtn" class="absolute right-5 top-[58%] -translate-y-1/2 w-11 h-11 rounded-full bg-white flex items-center justify-center shadow-md hover:bg-gray-100 transition z-30">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
+        <div class="absolute right-0 top-40 flex flex-col gap-3 z-30">
+            <a href="#">
+                <img src="images/Xlogo.png" class="w-12 h-12 hover:scale-110 transition">
+            </a>
+            <a href="#">
+                <img src="images/fblogo.png" class="w-12 h-12 hover:scale-110 transition">
+            </a>
+            <a href="#">
+                <img src="images/instalogo.png" class="w-12 h-12 hover:scale-110 transition">
+            </a>
+        </div>
+        <div id="dots" class="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+        </div>
+    </div>
+</section>
+
+<!--Budget section-->
+<section class="px-4 md:px-6 lg:px-8 py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative bg-cover bg-center bg-no-repeat rounded-[30px] overflow-visible shadow-lg h-[340px] flex justify-center items-center" style="background-image: url('images/Section.png');">
+            <div class="absolute left-1/2 -translate-x-1/2 -top-8 md:-top-6 z-20 w-full max-w-4xl px-4">
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+<button id="btn-budget" onclick="showContent('budget')" class="tab-btn w-full bg-white text-[#5D69F6] font-semibold text-xs sm:text-sm lg:text-base px-4 py-3 rounded-full shadow-md transition">
+    BUDGET
+</button>
+<button id="btn-regulations" onclick="showContent('regulations')" class="tab-btn w-full bg-[#2C2F6D] text-white font-semibold text-xs sm:text-sm lg:text-base px-4 py-3 rounded-full hover:bg-[#22245a] transition">
+    REGULATIONS
+</button>
+<button id="btn-press" onclick="showContent('press')" class="tab-btn w-full bg-[#2C2F6D] text-white font-semibold text-xs sm:text-sm lg:text-base px-4 py-3 rounded-full hover:bg-[#22245a] transition whitespace-nowrap">
+    PRESS RELEASES
+</button>
+<button id="btn-publications" onclick="showContent('publications')" class="tab-btn w-full bg-[#2C2F6D] text-white font-semibold text-xs sm:text-sm lg:text-base px-4 py-3 rounded-full hover:bg-[#22245a] transition">
+    PUBLICATIONS
+</button>
+</div>
+</div>
+<div class="px-4 md:px-6 lg:px-8 text-center text-white">
+    <div id="budget" class="tab-content">
+                    <h2 class="text-4xl font-bold mb-6">Budget</h2>
+                    <div class="space-y-3 text-base">
+                        <a href="#" class="block"> Pakistan Fiscal Operations </a>
+                        <a href="#" class="block"> Budget Publications</a>
+                        <a href="#" class="block"> Budget Wing Organogram </a>
+                    </div>
+                </div>
+                <div id="regulations" class="tab-content hidden">
+                    <h2 class="text-4xl font-bold mb-6"> Regulations</h2>
+                    <div class="space-y-3 text-base">
+                        <p>Regulation Document 1</p>
+                        <p>Regulation Document 2</p>
+                        <p>Regulation Document 3</p>
+                    </div>
+                </div>
+                <div id="press" class="tab-content hidden">
+                    <h2 class="text-4xl font-bold mb-6">Press Releases</h2>
+                    <div class="space-y-3 text-base">
+                        <p>Press Release 1</p>
+                        <p>Press Release 2</p>
+                        <p>Press Release 3</p>
+                    </div>
+                </div>
+                <div id="publications" class="tab-content hidden">
+                    <h2 class="text-4xl font-bold mb-6">Publications</h2>
+                    <div class="space-y-3 text-base">
+                        <p>Annual Report</p>
+                        <p>Economic Survey</p>
+                        <p>Budget Book</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- News & Events -->
+<section class="py-20 px-6 lg:px-10 xl:px-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-center text-[#000e25]">
+            News <span class="text-indigo-500">& Events</span>
+        </h2>
+        <p class="text-center text-indigo-500 text-sm mt-1 mb-10 cursor-pointer">VIEW ALL</p>
+
+        <div class="flex flex-col md:flex-row md:items-center gap-4">
+
+            <!--Mobile arrows-->
+            <div class="flex justify-center gap-4 md:hidden w-full">
+                <button id="newsPrev"
+                    class="w-10 h-10 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition flex items-center justify-center text-xl">
+                    &#8592;
+                </button>
+                <button id="newsNext"
+                    class="w-10 h-10 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition flex items-center justify-center text-xl">
+                    &#8594;
+                </button>
+            </div>
+            <!--end-->
+
+            <button id="newsPrevD"
+                class="hidden md:flex w-10 h-10 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition items-center justify-center text-xl flex-shrink-0"> &#8592;
+            </button>
+
+            <div id="newsContainer" class="flex overflow-hidden scroll-smooth gap-6 flex-1 w-full">
+                <div class="news-card w-full md:min-w-[48%] lg:min-w-[31%] flex-shrink-0 bg-white border rounded-xl p-5 shadow-sm">
+                    <p class="font-bold">01-05-2024</p>
+                    <p class="text-gray-500 mt-3">
+                        Return on investment is a financial metric that measures profitability.
+                    </p>
+                    <a href="#" class="text-indigo-500 mt-5 inline-block">Read More >></a>
+                </div>
+                <div class="news-card w-full md:min-w-[48%] lg:min-w-[31%] flex-shrink-0 bg-white border rounded-xl p-5 shadow-sm">
+                    <p class="font-bold">10-05-2024</p>
+                    <p class="text-gray-500 mt-3">
+                        Pakistan budget consultation<br>meeting successfully concluded.
+                    </p>
+                    <a href="#" class="text-indigo-500 mt-5 inline-block">Read More >></a>
+                </div>
+                <div class="news-card w-full md:min-w-[48%] lg:min-w-[31%] flex-shrink-0 bg-white border rounded-xl p-5 shadow-sm">
+                    <p class="font-bold">16-05-2024</p>
+                    <p class="text-gray-500 mt-3">
+                        New taxation policy<br>approved for fiscal reforms.
+                    </p>
+                    <a href="#" class="text-indigo-500 mt-5 inline-block">Read More >></a>
+                </div>
+                <div class="news-card w-full md:min-w-[48%] lg:min-w-[31%] flex-shrink-0 bg-white border rounded-xl p-5 shadow-sm">
+                    <p class="font-bold">22-05-2024</p>
+                    <p class="text-gray-500 mt-3">
+                        Ministry releases updated<br>economic outlook report.
+                    </p>
+                    <a href="#" class="text-indigo-500 mt-5 inline-block">Read More >></a>
+                </div>
+                <div class="news-card w-full md:min-w-[48%] lg:min-w-[31%] flex-shrink-0 bg-white border rounded-xl p-5 shadow-sm">
+                    <p class="font-bold">30-05-2024</p>
+                    <p class="text-gray-500 mt-3">
+                        Federal finance committee<br>announces new initiatives.
+                    </p>
+                    <a href="#" class="text-indigo-500 mt-5 inline-block">Read More >></a>
+                </div>
+            </div>
+
+            <button id="newsNextD"
+                class="hidden md:flex w-10 h-10 rounded-full bg-indigo-500 text-white hover:bg-indigo-600 transition items-center justify-center text-xl flex-shrink-0">
+                &#8594;
+            </button>
+        </div>
+    </div>
+</section>
+
+<!--Minister Finance-->
+<section class="py-20 bg-[#2B255A]">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="rounded-[28px] bg-gradient-to-b from-[#332D6A] to-[#2B255A] shadow-[0_20px_40px_rgba(0,0,0,0.25)] p-10">
+<div class="grid md:grid-cols-12 gap-8 items-center">
+<div class="md:col-span-3 flex flex-col gap-4">
+<button id="ministerBtn" onclick="showLeader('minister')" class="leader-btn bg-[#6C63FF] text-white py-3 rounded-full font-semibold transition">Minister for Finance</button>
+<button id="advisorBtn" onclick="showLeader('advisor')" class="leader-btn bg-transparent border border-white/20 text-white py-3 rounded-full font-semibold transition hover:bg-white/10">Finance Secretary</button>
+</div>
+<div class="md:col-span-9">
+<div id="minister" class="leader-content">
+<div class="grid md:grid-cols-3 gap-8 items-center">
+<div class="md:col-span-2">
+<h2 class="text-2xl font-bold text-white mb-1">Mr. Muhammad Aurangzeb</h2>
+<p class="text-gray-300 mb-5">Federal Minister for Finance</p>
+<p class="text-gray-300 leading-7 text-sm">
+Mr. Muhammad Aurangzeb assumed the role of
+Minister of Finance and Revenue in March
+2024. He oversees fiscal policy, budgeting,
+taxation, and economic reforms aimed at
+strengthening Pakistan's economy and
+promoting sustainable growth.
+</p>
+<button class="mt-6 bg-white text-[#2B255A] px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-100 transition">READ MORE</button>
+</div>
+<div class="flex justify-center">
+<img src="images/img4.png" alt="Muhammad Aurangzeb" class="w-48 rounded-2xl">
+</div>
+</div>
+</div>
+<div id="advisor" class="leader-content hidden">
+<div class="grid md:grid-cols-3 gap-8 items-center">
+<div class="md:col-span-2">
+<h2 class="text-2xl font-bold text-white mb-1">XYZ</h2>
+<p class="text-gray-300 mb-5"> Finance Secretary</p>
+<p class="text-gray-300 leading-7 text-sm">
+      the role of Minister of Finance and Revenue in March 2024. 
+      He oversees fiscal policy, budgeting, taxation, and economic 
+      reforms aimed at strengthening Pakistan's economy and promoting sustainable growth.
+</p>
+<button class="mt-6 bg-white text-[#2B255A] px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-100 transition">READ MORE</button>
+</div>
+<div class="flex justify-center">
+<img src="images/img5.png" alt="Finance Secretary" class="w-48 rounded-2xl">
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!--Important updates-->
+<section class="py-20 px-6 lg:px-10 bg-cover bg-center" style="background-image:url('images/wavebg.jpeg');">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-[#000e25]">
+            Important <span class="text-indigo-500">Updates</span>
+        </h2>
+        <div class="flex justify-center items-center gap-3 mt-4">
+            <label class="text-sm text-gray-600">Select Year</label>
+            <select class="border border-indigo-300 rounded-full px-4 py-2 text-sm focus:outline-none focus:border-indigo-500">
+                <option>2024</option>
+            </select>
+        </div>
+    </div>
+    <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Monthly Economic Update and Outlook
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        18 Apr, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Economic Affairs Division
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">18 Apr, 2024
+            </p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Pakistan Fiscal Operations Report
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        12 Apr, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Finance Division
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">
+                12 Apr, 2024
+            </p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Federal Budget Circular 2024-25
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        09 Apr, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Budget Wing
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">
+                09 Apr, 2024
+            </p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Debt Policy Statement
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        03 Apr, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Economic Wing
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">
+                03 Apr, 2024
+            </p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Medium Term Budget Strategy Paper
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        28 Mar, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Budget Wing
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">
+                28 Mar, 2024
+            </p>
+        </div>
+        <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-6 flex flex-col md:flex-row md:justify-between md:items-center">
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-4 text-center md:text-left">
+                <img src="images/pdflogo.png" class="w-14 h-14 object-contain">
+                <div>
+                    <h3 class="font-semibold text-[#000e25] text-lg">
+                        Economic Survey of Pakistan
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-2 md:hidden">
+                        20 Mar, 2024
+                    </p>
+                    <p class="text-sm text-gray-500 mt-2">
+                        Finance Division
+                    </p>
+                </div>
+            </div>
+            <p class="hidden md:block text-sm text-gray-500 whitespace-nowrap">
+                20 Mar, 2024
+            </p>
+        </div>
+    </div>
+</div>
+</section>
+
+<footer class="bg-gray-100 pt-16 pb-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-3 gap-12">
+        <div class="text-center">
+            <img src="images/Footerlogo.png" class="h-183.9 w-558 top-62px left-104px">
+        </div>
+            <div>
+                <h3 class="font-bold text-[#000e25] mb-5">Useful Links</h3>
+                <ul class="space-y-3 text-gray-600">
+                    <li><a href="#" class="hover:text-indigo-600">Home</a></li>
+                    <li><a href="#" class="hover:text-indigo-600">Other Links</a></li>
+                    <li><a href="#" class="hover:text-indigo-600">Official Email</a></li>
+                    <li><a href="#" class="hover:text-indigo-600">Phone Directory</a></li>
+                    <li><a href="#" class="hover:text-indigo-600">Contact Us</a></li>
+                </ul>
+            </div>
+            <div>
+                <div class="flex justify-center">
+                    <img src="images/footerImg.png" class="w-64 md:w-72 lg:w-80 h-auto mx-auto">
+                </div>
+            </div>
+        </div>
+        <div class="border-t mt-10 pt-6 text-center text-gray-500 text-sm">
+            Designed and Developed by: National Information Technology Board
+        </div>
+    </div>
+</footer>
+
+<script>
+  const images = [
+    "images/img1.jpg",
+    "images/img2.png",
+    "images/img3.png"
+  ];
+  let currentIndex = 0;
+  const carouselImg = document.getElementById("carouselImg");
+  const dotsContainer = document.getElementById("dots");
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+function renderDots() {
+    dotsContainer.innerHTML = "";
+    images.forEach((_, i) => {
+      const dot = document.createElement("span");
+      dot.className = "w-2 h-2 rounded-full cursor-pointer " +
+        (i === currentIndex ? "bg-white" : "bg-white/40");
+      dot.addEventListener("click", () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    });
+  }
+  function goToSlide(index) {
+    currentIndex = index;
+    carouselImg.src = images[currentIndex];
+    renderDots();
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % images.length; // wraps back to 0
+    goToSlide(currentIndex);
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + images.length) % images.length; // wraps to last
+    goToSlide(currentIndex);
+  }
+
+  nextBtn.addEventListener("click", showNext);
+  prevBtn.addEventListener("click", showPrev);
+
+  renderDots(); 
+  function showContent(section) {
+
+    document.querySelectorAll(".tab-content").forEach(content => {
+        content.classList.add("hidden");
+    });
+    document.querySelectorAll(".tab-btn").forEach(button => {
+        button.classList.remove("bg-white", "text-[#636EF5]");
+        button.classList.add("bg-[#2D2D67]", "text-white");
+    });
+
+    document.getElementById(section).classList.remove("hidden");
+    const activeBtn = document.getElementById("btn-" + section);
+
+    activeBtn.classList.remove("bg-[#2D2D67]", "text-white");
+    activeBtn.classList.add("bg-white", "text-[#636EF5]");
+}
+function showLeader(section){
+
+    document.querySelectorAll(".leader-content").forEach(content=>{
+        content.classList.add("hidden");
+    });
+    document.querySelectorAll(".leader-btn").forEach(btn=>{
+        btn.classList.remove("bg-[#000e25]","text-white");
+        btn.classList.add("bg-gray-200","text-gray-700");
+    });
+    document.getElementById(section).classList.remove("hidden");
+    const active =
+        section === "minister"
+        ? document.getElementById("ministerBtn")
+        : document.getElementById("advisorBtn");
+
+    active.classList.remove("bg-gray-200","text-gray-700");
+    active.classList.add("bg-[#000e25]","text-white");
+}
+// const newsContainer = document.getElementById("newsContainer");
+
+// function nextNews() {
+//     newsContainer.scrollBy({
+//         left: 500,
+//         behavior: "smooth"
+//     });
+// }
+
+// function prevNews() {
+//     newsContainer.scrollBy({
+//         left: -550,
+//         behavior: "smooth"
+//     });
+// }
+// document.getElementById("newsNext").addEventListener("click", nextNews);
+// document.getElementById("newsPrev").addEventListener("click", prevNews);
+
+// document.getElementById("newsNextD").addEventListener("click", nextNews);
+// document.getElementById("newsPrevD").addEventListener("click", prevNews);
+
+const newsContainer = document.getElementById("newsContainer");
+
+function getScrollAmount() {
+    const card = newsContainer.querySelector(".news-card");
+    const gap = parseFloat(getComputedStyle(newsContainer).gap) || 0;
+    return card.getBoundingClientRect().width + gap;
+}
+
+function nextNews() {
+    newsContainer.scrollBy({ left: getScrollAmount(), behavior: "smooth" });
+}
+
+function prevNews() {
+    newsContainer.scrollBy({ left: -getScrollAmount(), behavior: "smooth" });
+}
+
+document.getElementById("newsNext").addEventListener("click", nextNews);
+document.getElementById("newsPrev").addEventListener("click", prevNews);
+document.getElementById("newsNextD").addEventListener("click", nextNews);
+document.getElementById("newsPrevD").addEventListener("click", prevNews);
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+});
+</script>
+</body>
+</html>
